@@ -1,0 +1,137 @@
+### Base URL - change port if needed
+@baseUrl = http://localhost:5000
+
+### ── Health check ─────────────────────────────────────────────────────────
+GET {{baseUrl}}/health
+
+### ── List all categories ─────────────────────────────────────────────────
+GET {{baseUrl}}/api/units/categories
+
+### ── List all units ──────────────────────────────────────────────────────
+GET {{baseUrl}}/api/units
+
+### ── List units in a specific category ──────────────────────────────────
+GET {{baseUrl}}/api/units?category=Temperature
+
+### ── TEMPERATURE conversions ────────────────────────────────────────────
+
+# 100 °C → °F  (expected: 212)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 100,
+  "fromUnit": "celsius",
+  "toUnit": "fahrenheit"
+}
+
+###
+
+# 32 °F → °C  (expected: 0)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 32,
+  "fromUnit": "fahrenheit",
+  "toUnit": "celsius"
+}
+
+###
+
+# 0 °C → Kelvin  (expected: 273.15)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 0,
+  "fromUnit": "celsius",
+  "toUnit": "kelvin"
+}
+
+### ── LENGTH conversions ──────────────────────────────────────────────────
+
+# 1 km → miles  (expected: ~0.621371)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "kilometer",
+  "toUnit": "mile"
+}
+
+###
+
+# 1 meter → feet  (expected: ~3.28084)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "meter",
+  "toUnit": "foot"
+}
+
+### ── MASS conversions ────────────────────────────────────────────────────
+
+# 1 kg → pounds  (expected: ~2.20462)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "kilogram",
+  "toUnit": "pound"
+}
+
+### ── SPEED conversions ───────────────────────────────────────────────────
+
+# 100 km/h → mph  (expected: ~62.1371)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 100,
+  "fromUnit": "kilometer_per_hour",
+  "toUnit": "mile_per_hour"
+}
+
+### ── DATA conversions ────────────────────────────────────────────────────
+
+# 1 GB → MB  (expected: 1024)
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "gigabyte",
+  "toUnit": "megabyte"
+}
+
+### ── GET (query-string) shorthand ───────────────────────────────────────
+GET {{baseUrl}}/api/conversions?value=100&from=celsius&to=fahrenheit
+
+### ── Error cases ─────────────────────────────────────────────────────────
+
+# Unknown unit → 400
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "banana",
+  "toUnit": "meter"
+}
+
+###
+
+# Incompatible categories → 422
+POST {{baseUrl}}/api/conversions
+Content-Type: application/json
+
+{
+  "value": 1,
+  "fromUnit": "meter",
+  "toUnit": "kilogram"
+}

@@ -1,0 +1,42 @@
+## .NET Core
+*.user
+*.suo
+.vs/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+logs/
+*.log
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+TestResults/
+
+## NuGet
+*.nupkg
+.nuget/
+packages/
+!packages/repositories.config
+
+## Rider
+.idea/
+*.sln.iml
+
+## VS Code
+.vscode/
+
+## macOS
+.DS_Store
+
+## Environment files
+.env
+.env.local
+*.secrets.json
+appsettings.Local.json
